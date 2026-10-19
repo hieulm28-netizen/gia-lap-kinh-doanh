@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Giả Lập Doanh Nghiệp - Bài 6 KTPL</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; padding: 20px; }
+        .container { max-width: 650px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #1a73e8; text-align: center; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #5f6368; font-size: 14px; margin-bottom: 25px; }
+        label { font-weight: 600; margin-top: 15px; display: block; color: #202124; }
+        input, textarea { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #dadce0; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        input:focus, textarea:focus { border-color: #1a73e8; outline: none; }
+        button { width: 100%; background: #1a73e8; color: white; padding: 14px; border: none; border-radius: 8px; margin-top: 25px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        button:hover { background: #1557b0; }
+        .result-box { margin-top: 25px; padding: 20px; background: #e8f0fe; border: 1px solid #aecbfa; border-radius: 8px; display: none; }
+        .copy-btn { background: #34a853; margin-top: 10px; }
+        .copy-btn:hover { background: #2d8e47; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🚀 GIẢ LẬP DOANH NGHIỆP THỰC TẾ</h2>
+        <p class="subtitle">Môn: Giáo dục Kinh tế và Pháp luật - Bài 6: Ý tưởng & Cơ hội kinh doanh</p>
+        
+        <form id="bizForm">
+            <label>1. Tên Doanh nghiệp / Sản phẩm & Dịch vụ:</label>
+            <input type="text" id="bizName" placeholder="Ví dụ: Tiệm Bánh mì Healthy Học đường" required>
+            
+            <label>2. Khách hàng mục tiêu:</label>
+            <input type="text" id="targetCustomer" placeholder="Ví dụ: Học sinh THPT, thầy cô giáo, người ăn kiêng" required>
+
+            <label>3. Vốn khởi nghiệp dự kiến (VNĐ):</label>
+            <input type="text" id="capital" placeholder="Ví dụ: 15.000.000 VNĐ" required>
+
+            <label>4. Giá bán & Kênh phân phối:</label>
+            <input type="text" id="pricing" placeholder="Ví dụ: 25.000 VNĐ/ổ, bán trực tiếp cổng trường & đặt qua Zalo" required>
+
+            <button type="button" onclick="generatePrompt()">Tạo kịch bản giả lập cho AI</button>
+        </form>
+
+        <div id="resultBox" class="result-box">
+            <strong style="color: #188038;">✅ Kịch bản giả lập đã sẵn sàng!</strong>
+            <p style="font-size: 13px; color: #5f6368;">Hãy sao chép đoạn lệnh bên dưới và dán vào ChatGPT / Gemini để bắt đầu trò chơi giả lập:</p>
+            <textarea id="promptOutput" rows="7" readonly></textarea>
+            <button class="copy-btn" onclick="copyPrompt()">📋 Sao chép Prompt & Mở AI</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const name = document.getElementById('bizName').value;
+            const target = document.getElementById('targetCustomer').value;
+            const capital = document.getElementById('capital').value;
+            const pricing = document.getElementById('pricing').value;
+
+            if(!name || !target || !capital || !pricing) {
+                alert("Vui lòng điền đầy đủ thông tin vào các ô!");
+                return;
+            }
+
+            const promptText = `Bạn hãy đóng vai là một 'Hệ thống Giả lập Thị trường Kinh doanh' trong môn Giáo dục Kinh tế và Pháp luật. Tôi là người sáng lập doanh nghiệp mới:\n` +
+            `- Tên sản phẩm/dịch vụ: ${name}\n` +
+            `- Khách hàng mục tiêu: ${target}\n` +
+            `- Vốn khởi nghiệp: ${capital}\n` +
+            `- Giá bán & Kênh phân phối: ${pricing}\n\n` +
+            `Nhiệm vụ của bạn:\n` +
+            `1. Mô phỏng tháng hoạt động đầu tiên: Dự đoán số lượng khách mua, doanh thu, chi phí và lợi nhuận ước tính.\n` +
+            `2. Đưa ra 2 tình huống thử thách (1 về cạnh tranh thị trường, 1 về an toàn thực phẩm hoặc quy định pháp lý) và yêu cầu tôi đưa ra phương án xử lý.\n` +
+            `3. Đánh giá tính khả thi chung của ý tưởng kinh doanh này.`;
+
+            document.getElementById('promptOutput').value = promptText;
+            document.getElementById('resultBox').style.display = 'block';
+        }
+
+        function copyPrompt() {
+            const copyText = document.getElementById('promptOutput');
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Đã sao chép kịch bản! Bạn có thể dán (Ctrl+V) vào ChatGPT hoặc Gemini.");
+        }
+    </script>
+
+</body>
+</html>
